@@ -11,7 +11,7 @@ artist_names = []
 with open("artist_names.txt", "r") as artist_file:
     artist_names = artist_file.readlines()
 
-with closing(Chrome()) as browser:
+with closing(Firefox()) as browser:
     for cur_artist in artist_names:
         cur_artist = cur_artist.strip()
         print "Starting histogram for " + cur_artist
