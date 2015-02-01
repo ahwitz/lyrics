@@ -31,7 +31,7 @@ class Embedder():
             else:
                 self.word_freqs[cur_word] = cur_count
 
-    def PrintResults(self):
+    def PrintResults(self, prefix=""):
         artist_lookup = []
         word_lookup = []
 
