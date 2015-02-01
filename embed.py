@@ -1,27 +1,31 @@
 import os
 import json
 import operator
-import sys
 
 class Embedder():
-    def __init__(self):
+    #min_frequency as parameter on initialization is the threshold to include words:
+    #   if an artist says the word "frequency" 2 times in their corpus and min_frequency is 10, "frequency" will not be calculated
+    def __init__(self, min_frequency):
         print "initialized"
-        self.artist_freqs = {}
-        self.word_freqs = {}
-        self.artist_histograms = {}
+        self.artist_freqs = {} #list of total different words used by artist with {artist:total} pairs
+        self.word_freqs = {} #list of total frequencies of words throughout all input with {word:total} pairs
+        self.artist_histograms = {} #artist histograms as dictionaries with {artist:histogram} pairs
+        self.min_frequency = min_frequency
 
     def ImportArtist(self, artist_name, histogram):
         if self.artist_freqs.has_key(artist_name):
             print "Duplicate artist for", artist_name, "- skipping?"
             return
 
-        self.artist_freqs[artist_name] = sum(y for x, y in list(histogram))
-        self.artist_histograms[artist_name] = histogram
-        #print artist_name, histogram, self.artist_histograms
-        #sys.exit()
+        threshold_histogram = {}
+        for x, y in list(histogram):
+            if y >= self.min_frequency:
+                threshold_histogram[x] = y
 
+        self.artist_freqs[artist_name] = sum(y for x, y in threshold_histogram.items())
+        self.artist_histograms[artist_name] = threshold_histogram
 
-        for cur_word, cur_count in list(histogram):
+        for cur_word, cur_count in threshold_histogram.items():
             if self.word_freqs.has_key(cur_word):
                 self.word_freqs[cur_word] += cur_count
             else:
@@ -53,15 +57,15 @@ class Embedder():
             idx = 0
             for cur_artist in artist_lookup:
                 artist_histograms.write(str(artist_lookup.index(cur_artist)) + " ")
-                for cur_word in self.artist_histograms[cur_artist]:
-                    artist_histograms.write(str(word_lookup.index(cur_word[0])) + ":" + str(cur_word[1]) + " ")
+                for cur_word, cur_count in self.artist_histograms[cur_artist].items():
+                    artist_histograms.write(str(word_lookup.index(cur_word)) + ":" + str(cur_count) + " ")
                 artist_histograms.write("\n")
 
 
 
 if __name__ == "__main__":
     print "Running module as main - looking through local directory"
-    embed = Embedder()
+    embed = Embedder(10)
 
     files = [f for f in os.listdir('.') if os.path.isfile(f) and f.endswith("json")]
     for file in files:
