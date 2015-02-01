@@ -1,0 +1,5 @@
+argparse==1.2.1
+nltk==3.0.1
+selenium==2.44.0
+stop-words==2015.1.31
+wsgiref==0.1.2
