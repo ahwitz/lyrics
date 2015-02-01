@@ -11,9 +11,7 @@ artist_names = []
 with open("artist_names.txt", "r") as artist_file:
     artist_names = artist_file.readlines()
 
-print artist_names
-
-with closing(Firefox()) as browser:
+with closing(Chrome()) as browser:
     for cur_artist in artist_names:
         cur_artist = cur_artist.strip()
         print "Starting histogram for " + cur_artist
@@ -21,6 +19,13 @@ with closing(Firefox()) as browser:
         print url
         artistPage = urllib2.urlopen(url)
         artistAlbums = json.load(artistPage)['albums']
+
+        print cur_artist, "has", len(artistAlbums), "albums"
+
+        if len(artistAlbums) == 0:
+            print "Skipping", cur_artist
+            continue
+
         songs = []
         words = {}
 
