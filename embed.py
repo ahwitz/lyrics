@@ -18,7 +18,8 @@ class Embedder():
             return
 
         threshold_histogram = {}
-        for x, y in list(histogram):
+        for x in histogram:
+            y = histogram[x]
             if y >= self.min_frequency:
                 threshold_histogram[x] = y
 
