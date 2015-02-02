@@ -6,9 +6,12 @@ import pickle
 def fetch_and_process_artist_file(filename):
   with open(filename) as f:
     artists = [l.strip() for l in f]
+  fetch_and_process_artists(artists)
+
+def fetch_and_process_artists(artist_list):
   songs = []
 
-  for a in artists:
+  for a in artist_list:
     songs += crawler.getLyrics(a)
 
   with open(filename + ".songs_pickle", "w") as fout:
