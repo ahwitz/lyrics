@@ -8,11 +8,11 @@ def fetch_and_process_artist_file(filename):
     artists = [l.strip() for l in f]
   fetch_and_process_artists(artists, filename)
 
-def fetch_and_process_artists(artist_list, filename):
+def fetch_and_process_artists(artist_list, filename, num_processes=1):
   songs = []
 
   for a in artist_list:
-    songs += crawler.getLyrics(a)
+    songs += crawler.getLyrics(a, num_processes=num_processes)
 
   with open(filename + ".songs_pickle", "w") as fout:
     pickle.dump(songs, fout)
