@@ -6,9 +6,9 @@ import pickle
 def fetch_and_process_artist_file(filename):
   with open(filename) as f:
     artists = [l.strip() for l in f]
-  fetch_and_process_artists(artists)
+  fetch_and_process_artists(artists, filename)
 
-def fetch_and_process_artists(artist_list):
+def fetch_and_process_artists(artist_list, filename):
   songs = []
 
   for a in artist_list:
