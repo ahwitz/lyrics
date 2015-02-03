@@ -1,6 +1,7 @@
 import os
 import json
 import operator
+import codecs
 
 class Embedder():
     #min_frequency as parameter on initialization is the threshold to include words:
@@ -38,20 +39,20 @@ class Embedder():
 
         sorted_freqs = sorted(self.artist_freqs.items(), key=operator.itemgetter(1))[::-1]
 
-        with open("artist_ids.txt", "w") as artist_ids:
+        with codecs.open("artist_ids.txt", "w", encoding="utf-8") as artist_ids:
             idx = 0
             for tup in sorted_freqs:
-                artist_lookup.append(str(tup[0]))
-                artist_ids.write(str(idx) + "<SEP>" + str(tup[0]) + "<SEP>" + str(tup[1]) + "\n")
+                artist_lookup.append(tup[0])
+                artist_ids.write(str(idx) + "<SEP>" + tup[0] + "<SEP>" + str(tup[1]) + "\n")
                 idx+=1
 
         sorted_words = sorted(self.word_freqs.items(), key=operator.itemgetter(1))[::-1]
 
-        with open("word_ids.txt", "w") as word_ids:
+        with codecs.open("word_ids.txt", "w", encoding="utf-8") as word_ids:
             idx = 0
             for tup in sorted_words:
-                word_lookup.append(str(tup[0]))
-                word_ids.write(str(idx) + "<SEP>" + str(tup[0]) + "<SEP>" + str(tup[1]) + "\n")
+                word_lookup.append(tup[0])
+                word_ids.write(str(idx) + "<SEP>" + tup[0] + "<SEP>" + str(tup[1]) + "\n")
                 idx+=1
 
         with open("artist_histograms.txt", "w") as artist_histograms:
