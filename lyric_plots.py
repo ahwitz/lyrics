@@ -11,23 +11,22 @@ artist_axes = [-0.65, 1, -1, 0.75]
 word_axes = [-2.43, 3.44, -2.52, 3.34]
 artist_resolution = 0.05
 word_resolution = 0.15
+percentile = 98.5
 
 # artist label plots
-a = artist_axes
-emplot.axis(a[0], a[1], a[2], a[3])
-emplot.plotComponent(emb, "Model 1")
-emplot.plotComponent(emb, "Model 0", labels=True, resolution=artist_resolution)
 figure = emplot.gcf()
 figure.set_size_inches(24, 24)
+emplot.plotComponent(emb, "Model 1")
+emplot.plotComponent(emb, "Model 0", labels=True,
+    resolution=artist_resolution, magic_axes=percentile, magic_resolution=True)
 emplot.saveFigure("artists.png")
 emplot.clearPlot()
 
 # word label plots
-a = word_axes
-emplot.axis(a[0], a[1], a[2], a[3])
-emplot.plotComponent(emb, "Model 0")
-emplot.plotComponent(emb, "Model 1", labels=True, resolution=word_resolution)
 figure = emplot.gcf()
 figure.set_size_inches(24, 24)
+emplot.plotComponent(emb, "Model 0")
+emplot.plotComponent(emb, "Model 1", labels=True, resolution=word_resolution,
+    magic_axes=percentile, magic_resolution=True)
 emplot.saveFigure("words.png")
 emplot.clearPlot()

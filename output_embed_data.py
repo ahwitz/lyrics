@@ -2,7 +2,7 @@
 import embed
 import os
 import pickle
-embedder = embed.Embedder(10)
+embedder = embed.Embedder(25)
 mapfiles = ["split_artists/" + f for f in os.listdir("split_artists/") if ".lyrics_map" in f]
 for fn in mapfiles:
     with open(fn) as f:
